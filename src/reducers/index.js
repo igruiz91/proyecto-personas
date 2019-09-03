@@ -1,6 +1,7 @@
-import {combineReducers} from 'redux';
-import {getUsers} from './UserReducer';
+import { combineReducers } from 'redux';
+import { getUsers, getUsersById } from './UserReducer';
 
-export default combineReducers({ 
-    getUsers
+export default combineReducers({
+    getUsers,
+    getUsersById
 });

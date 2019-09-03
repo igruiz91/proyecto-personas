@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {getUsers} from '../actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getUsers } from '../actions';
 import 'materialize-css/dist/css/materialize.min.css';
-import {RingLoader} from 'react-spinners';
+import { RingLoader } from 'react-spinners';
 import './index.css';
 
 import UserItem from '../components/UserItem';
 
 class Home extends Component {
-    constructor(){
-        super();
-    }
 
     componentWillMount() {
         this.props.getUsers();
     }
-    
+
     state = {}
     render() {
-        const {users} = this.props;
+        const { users } = this.props;
         let usuarios = [];
-        if(users.data){
-           usuarios = users.data.map((user, index) => {
-                return(
-                    <UserItem 
+        if (users.data) {
+            usuarios = users.data.map((user, index) => {
+                return (
+                    <UserItem
                         key={index}
                         id={user.id}
                         name={user.name}
@@ -34,37 +31,37 @@ class Home extends Component {
                 );
             })
         }
-        if(users.type === "START_GET_USERS"){
-            return(
+        if (users.type === "START_GET_USERS") {
+            return (
                 <div className="Home-preLoader">
-                    <RingLoader 
-                        color="#FFF" 
-                        loading={true}/>
+                    <RingLoader
+                        color="#FFF"
+                        loading={true} />
                 </div>
-                
+
             )
         }
         return (
             <div className="Home">
                 {usuarios}
-               
+
             </div>
         );
     }
 }
 
 //Convierte el valor del store que quiero en propiedades para el componente
-function mapStateToProps(state){
-    return{
+function mapStateToProps(state) {
+    return {
         users: state.getUsers
     }
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         getUsers
     }, dispatch)
-        
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
